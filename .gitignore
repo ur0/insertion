@@ -1,0 +1,4 @@
+*.o
+insertion
+test_program
+test_library.so
