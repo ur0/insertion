@@ -8,7 +8,7 @@
 
 void inject_library(void *malloc_addr, void *dlopen_addr, void* free_addr, int path_size);
 void nullsub(void);
-const size_t injector_len = 0x2d;
+const size_t injector_len = 0x46;
 
 int main(int argc, char* argv[]) {
 	if (argc <= 2) {
