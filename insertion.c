@@ -8,7 +8,7 @@
 
 void inject_library(void *malloc_addr, void *dlopen_addr, void* free_addr, int path_size);
 void nullsub(void);
-const size_t injector_len = 0x22;
+const size_t injector_len = 0x2d;
 
 int main(int argc, char* argv[]) {
 	if (argc <= 2) {
@@ -26,11 +26,11 @@ int main(int argc, char* argv[]) {
 	size_t path_len = strlen(real_path) + 1;
 
 	unsigned long int libc_base_addr = get_library_addr(target_pid, "libc-");
-	unsigned long int malloc_addr = libc_base_addr + 0x000000000007cf40;
-	unsigned long int free_addr = libc_base_addr + 0x000000000007d330;
+	unsigned long int malloc_addr = libc_base_addr + 0x000000000007e600;
+	unsigned long int free_addr = libc_base_addr + 0x000000000007ea90;
 
 	unsigned long int libdl_base_addr = get_library_addr(target_pid, "libdl-");
-	unsigned long int dlopen_addr = libdl_base_addr + 0x0000000000000f70;
+	unsigned long int dlopen_addr = libdl_base_addr + 0x0000000000000fe0;
 
 	printf("Target process' libc is at 0x%x\n", libc_base_addr);
 	printf("Target process' malloc is at 0x%x\n", malloc_addr);

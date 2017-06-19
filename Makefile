@@ -1,7 +1,7 @@
 insertion: inject_library.o insertion.c util.h ptrace.h
 	$(CC) $(CFLAGS) $@.c inject_library.o $(LDFLAGS) -o $@
 
-inject_library.o:
+inject_library.o: inject_library.s
 	nasm -f elf64 inject_library.s
 
 test: test_library test_program

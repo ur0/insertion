@@ -10,6 +10,11 @@ inject_library:
 ; rdx -> Pointer to dlopen()
 ; rcx -> Size of the path to the .so to load
 
+; Create a new stack frame
+push rbp
+; Make sure that the stack is aligned for SIMD instructions
+sub rsp, 0x8
+
 ; Save rbx because we're using it as scratch space
 push rbx
 ; Save addresses of free & dlopen on the stack
@@ -31,9 +36,9 @@ pop rbx
 mov rdi, rax
 ; Push rax because it'll be overwritten
 push rax
-; Second argument to dlopen (RTLD_NOW)
-mov rsi, 0x2
-; Call dlopen(path_to_library, RTLD_NOW)
+; Second argument to dlopen (RTLD_LAZY)
+mov rsi, 0x1
+; Call dlopen(path_to_library, RTLD_LAZY)
 call rbx
 ; Pass control to the injector
 int 0x3
@@ -47,6 +52,12 @@ call rbx
 
 ; Restore rbx
 pop rbx
+
+; Fix the stack pointer
+add rsp, 0x8
+; Destroy the stack frame
+pop rbp
+
 ; We're done
 int 0x3
 retn
